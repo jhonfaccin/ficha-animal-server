@@ -1,21 +1,25 @@
 package br.com.jhonfaccin.service;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import br.com.jhonfaccin.modelo.Ficha;
 
 public class FichaService {
-	private static ArrayList<Ficha> fichas;
+	private static final List<Ficha> fichas = new ArrayList<>();
 	
-	public FichaService() {
-		fichas = new ArrayList<>();
+	static {
+		fichas.add(new Ficha(1, new Date(), false, null));
+		fichas.add(new Ficha(2, new Date(), false, null));
+		fichas.add(new Ficha(3, new Date(), false, null));
 	}
 
 	public void adicionarFicha(Ficha ficha) {
 		fichas.add(ficha);
 	}
 	
-	public ArrayList<Ficha> getFichas() {
+	public List<Ficha> getFichas() {
 		return fichas;
 	}
 

@@ -1,6 +1,6 @@
 package br.com.jhonfaccin.teste;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class TesteAnimalService {
 		assertEquals(new Integer(2222),gato.getId());
 		assertEquals("gato",gato.getNome());
 		assertEquals(new Integer(3333),cabrito.getId());
-		assertEquals("cabrito",cachorro.getNome());
+		assertEquals("cabrito",cabrito.getNome());
 	}
 }
 

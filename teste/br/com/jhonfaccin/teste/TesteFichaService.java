@@ -1,6 +1,6 @@
 package br.com.jhonfaccin.teste;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,14 +21,16 @@ public class TesteFichaService {
 	
 	@Before
 	public void setUp() {
-		animais = new AnimalService().getAnimais();
-		ficha = new Ficha(11, new Date(), false, animais);
-		fichasService = new FichaService();
-		fichasService.adicionarFicha(ficha);
+		
 	}
 
 	@Test
 	public void adicionarFicha() throws Exception {
+		animais = new AnimalService().getAnimais();
+		ficha = new Ficha(11, new Date(), false, animais);
+		fichasService = new FichaService();
+		fichasService.adicionarFicha(ficha);
+		
 		assertEquals(1, fichasService.getFichas().size());
 		assertEquals(3, fichasService.getFichas().get(0).getAnimais().size());
 		assertEquals(new Integer(11), fichasService.getFichas().get(0).getId());

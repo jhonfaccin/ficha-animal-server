@@ -9,6 +9,9 @@ public class Ficha {
 	private boolean status;
 	private ArrayList<Animal> animais;
 	
+	public Ficha() {
+	}
+	
 	public Ficha(Integer id,Date dataDeCadastro,boolean status,ArrayList<Animal> animais) {
 		this.id = id;
 		this.dataDeCadastro = dataDeCadastro;
