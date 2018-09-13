@@ -37,4 +37,8 @@ public class Ficha {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
+	
+	public void setAnimais(ArrayList<Animal> animais) {
+		this.animais = animais;
+	}
 }

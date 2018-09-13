@@ -1,26 +1,26 @@
 package br.com.jhonfaccin.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import br.com.jhonfaccin.modelo.Ficha;
 
 public class FichaService {
-	private static final List<Ficha> fichas = new ArrayList<>();
+	private final List<Ficha> fichas = new ArrayList<>();
 	
-	static {
-		fichas.add(new Ficha(1, new Date(), false, null));
-		fichas.add(new Ficha(2, new Date(), false, null));
-		fichas.add(new Ficha(3, new Date(), false, null));
-	}
+//	static {
+//		fichas.add(new Ficha(1, new Date(), false, null));
+//		fichas.add(new Ficha(2, new Date(), false, null));
+//	}
 
 	public void adicionarFicha(Ficha ficha) {
-		fichas.add(ficha);
+		if (!fichas.contains(ficha)) {
+			this.fichas.add(ficha);
+		}
 	}
 	
 	public List<Ficha> getFichas() {
-		return fichas;
+		return this.fichas;
 	}
 
 	public Ficha buscaPorId(Integer id) {
@@ -33,15 +33,9 @@ public class FichaService {
 	}
 
 	public void remover(Ficha ficha) {
-		fichas.remove(ficha);
+		this.fichas.remove(ficha);
 	}
 
-	public void atualizarFicha(Ficha ficha) {
-		if(fichas.equals(ficha)) {
-			int indice = fichas.indexOf(ficha);
-			fichas.add(indice, ficha);
-		}
-	}
 }
 
 
