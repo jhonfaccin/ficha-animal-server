@@ -17,11 +17,13 @@ public class PesquisaResource {
 	
 	@GET
     @Produces("application/json")
-    public List<Ficha> get(@QueryParam("id") Integer id,@QueryParam("dataInincio") Date dataInicio, @QueryParam("dataFim") Date dataFim) {
+    public List<Ficha> get(@QueryParam("id") Integer id, @QueryParam("dataInicio") Long dataInicio, @QueryParam("dataFim") Long dataFim) {
 		FichaService fichaService = new FichaService();
 		if (id != null) {
-			return Arrays.asList(fichaService.buscaPorId(id));
+			Ficha ficha = fichaService.buscaPorId(id);
+			return ficha != null ? Arrays.asList(ficha) : null;
 		}
-		return fichaService.buscaPorData(dataInicio, dataFim);
-    }
+		return fichaService.buscaPorData(new Date(dataInicio), new Date(dataFim));
+    }	
+	
 }

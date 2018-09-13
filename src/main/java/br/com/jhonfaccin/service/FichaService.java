@@ -13,7 +13,7 @@ public class FichaService {
 	}
 	
 	public Ficha adicionarFicha(Ficha ficha) {
-		ficha.setId(fichas.size());
+		ficha.setId(fichas.size() + 1);
 		fichas.add(ficha);
 		return ficha;
 	}
@@ -38,39 +38,20 @@ public class FichaService {
 		}
 	}
 
-
-	public Ficha pesquisa(Integer id, Date dataInicio, Date dataFIm) {
-		Ficha ficha = buscaPorId(id);
-		if ( ficha != null) {
-			return ficha;
-		}else if (dataInicio != null){
-			Ficha x  = buscaPorDataInicio(dataInicio);
-		}
-		return null;
-	}
-
-
-	private Ficha buscaPorDataInicio(Date dataInicio) {
-		for (Ficha ficha : fichas) {
-			if (ficha.getDataDeCadastro().getTime() == dataInicio.getTime()) {
+	public Ficha atualizarFicha(Integer id, Ficha ficha) {
+		for (Ficha f : fichas) {
+			if (f.getId() == ficha.getId()) {
+				f.setAnimais(ficha.getAnimais());
+				f.setAtivo(ficha.getAtivo());
+				f.setDataDeCadastro(ficha.getDataDeCadastro());
+				f.setObservacao(ficha.getObservacao());
 				return ficha;
 			}
 		}
 		return null;
 	}
 
-	public void atualizarFicha(Integer id, Ficha ficha) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public List<Ficha> buscaPorData(Date dataInicio, Date dataFim) {
-		return null;
+		return fichas;
 	}
-
 }
-
-
-
-
-

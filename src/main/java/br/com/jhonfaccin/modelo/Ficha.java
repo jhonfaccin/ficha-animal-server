@@ -40,7 +40,7 @@ public class Ficha {
 		this.id = id;
 	}
 	
-	public void setAnimais(ArrayList<Animal> animais) {
+	public void setAnimais(List<Animal> animais) {
 		this.animais = animais;
 	}
 
