@@ -30,9 +30,8 @@ public class FichaResource {
 	@POST
     @Produces("application/json")
     public Ficha criar(Ficha ficha) {
-		System.out.println("Buenas!!!");
-		System.out.println(ficha.getId());
-		System.out.println(ficha.getDataDeCadastro());
+		FichaService fichaService = new FichaService();
+		fichaService.adicionarFicha(ficha);
 		return ficha;
 	}
 }

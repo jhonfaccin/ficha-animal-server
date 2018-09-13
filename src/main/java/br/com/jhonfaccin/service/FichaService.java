@@ -1,18 +1,22 @@
 package br.com.jhonfaccin.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.jhonfaccin.modelo.Ficha;
 
 public class FichaService {
-	private final List<Ficha> fichas = new ArrayList<>();
+	private static final List<Ficha> fichas = new ArrayList<>();
 	
-//	static {
-//		fichas.add(new Ficha(1, new Date(), false, null));
-//		fichas.add(new Ficha(2, new Date(), false, null));
-//	}
-
+	public FichaService() {
+//		AnimalService animais = new AnimalService();
+//		Ficha ficha1 = new Ficha(1111,new Date(),false,animais.getAnimais());
+//		
+//		fichas.add(ficha1);
+	}
+	
+	
 	public void adicionarFicha(Ficha ficha) {
 		if (!fichas.contains(ficha)) {
 			this.fichas.add(ficha);
