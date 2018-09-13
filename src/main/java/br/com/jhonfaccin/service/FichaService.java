@@ -10,17 +10,12 @@ public class FichaService {
 	private static final List<Ficha> fichas = new ArrayList<>();
 	
 	public FichaService() {
-//		AnimalService animais = new AnimalService();
-//		Ficha ficha1 = new Ficha(1111,new Date(),false,animais.getAnimais());
-//		
-//		fichas.add(ficha1);
 	}
 	
-	
-	public void adicionarFicha(Ficha ficha) {
-		if (!fichas.contains(ficha)) {
-			this.fichas.add(ficha);
-		}
+	public Ficha adicionarFicha(Ficha ficha) {
+		ficha.setId(fichas.size());
+		fichas.add(ficha);
+		return ficha;
 	}
 	
 	public List<Ficha> getFichas() {
@@ -36,8 +31,41 @@ public class FichaService {
 		return null;
 	}
 
-	public void remover(Ficha ficha) {
-		this.fichas.remove(ficha);
+	public void remover(Integer id) {
+		Ficha fichaParaRemover = buscaPorId(id);
+		if (fichaParaRemover != null) {
+			fichas.remove(fichaParaRemover);
+		}
+	}
+
+
+	public Ficha pesquisa(Integer id, Date dataInicio, Date dataFIm) {
+		Ficha ficha = buscaPorId(id);
+		if ( ficha != null) {
+			return ficha;
+		}else if (dataInicio != null){
+			Ficha x  = buscaPorDataInicio(dataInicio);
+		}
+		return null;
+	}
+
+
+	private Ficha buscaPorDataInicio(Date dataInicio) {
+		for (Ficha ficha : fichas) {
+			if (ficha.getDataDeCadastro().getTime() == dataInicio.getTime()) {
+				return ficha;
+			}
+		}
+		return null;
+	}
+
+	public void atualizarFicha(Integer id, Ficha ficha) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List<Ficha> buscaPorData(Date dataInicio, Date dataFim) {
+		return null;
 	}
 
 }
