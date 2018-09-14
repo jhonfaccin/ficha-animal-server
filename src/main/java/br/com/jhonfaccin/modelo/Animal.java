@@ -1,8 +1,5 @@
 package br.com.jhonfaccin.modelo;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class Animal {
 	private Integer id;
 	private String nome;
