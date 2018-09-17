@@ -46,10 +46,10 @@ public class Dao {
 	}
 
 	private void atualizarAnimais(Ficha ficha) {
-		if (ficha.listaDeAnimais() != null) {
-			int numeroDeAnimais = ficha.listaDeAnimais().size();
+		if (ficha.getAnimais() != null) {
+			int numeroDeAnimais = ficha.getAnimais().size();
 			for (int i = 0; i < numeroDeAnimais; i++) {
-				Animal animal = ficha.listaDeAnimais().get(i);
+				Animal animal = ficha.getAnimais().get(i);
 				animal.setFichaId(ficha.getId());
 				Session session = sessionFactory.openSession();
 				session.beginTransaction();
@@ -73,10 +73,19 @@ public class Dao {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Ficha ficha = session.createNativeQuery("SELECT * FROM ficha WHERE ficha.id ="+id,Ficha.class).getSingleResult();
-//		List<Animal> animais = session.createNativeQuery("SELECT * FROM animal WHERE animal.ficha_id ="+id,Animal.class).getResultList();
-//		ficha.listaDeAnimais().addAll(animais);
 		session.getTransaction().commit();
 		session.close();
+		ficha = animaisCadastradosNaFicha(id,ficha);
+		return ficha;
+	}
+
+	private Ficha animaisCadastradosNaFicha(Integer id, Ficha ficha) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		List<Animal> animais = session.createNativeQuery("SELECT * FROM animal WHERE animal.ficha_id ="+id,Animal.class).getResultList();
+		session.getTransaction().commit();
+		session.close();
+		ficha.setAnimais(animais);
 		return ficha;
 	}
 

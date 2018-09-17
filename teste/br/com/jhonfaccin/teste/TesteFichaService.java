@@ -1,6 +1,6 @@
 package br.com.jhonfaccin.teste;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,7 +12,7 @@ import br.com.jhonfaccin.modelo.Ficha;
 import br.com.jhonfaccin.service.AnimalService;
 import br.com.jhonfaccin.service.FichaService;
 
-public class TesteFichaServic {
+public class TesteFichaService {
 	
 
 	@Test
@@ -27,6 +27,14 @@ public class TesteFichaServic {
 		assertEquals(new Integer(11), fichasService.getFichas().get(0).getId());
 //		assertEquals(false, fichasService.getFichas().get(0).getStatus());
 		assertEquals(ficha.getDataDeCadastro().getTime(), fichasService.getFichas().get(0).getDataDeCadastro().getTime());
+	}
+	
+	@Test
+	public void buscarPorId() throws Exception {
+		FichaService fichasService = new FichaService();
+		Ficha ficha = fichasService.buscaPorId(1);
+		
+		assertEquals(2, ficha.getAnimais().size());
 	}
 	
 }
