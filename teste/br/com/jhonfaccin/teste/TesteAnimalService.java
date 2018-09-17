@@ -2,7 +2,8 @@ package br.com.jhonfaccin.teste;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
+import java.util.List;
+
 import org.junit.Test;
 
 import br.com.jhonfaccin.modelo.Animal;
@@ -10,26 +11,21 @@ import br.com.jhonfaccin.service.AnimalService;
 
 public class TesteAnimalService {
 	
-	private AnimalService animal;
-
-	@Before
-	public void setUp() {
-		this.animal = new AnimalService();
-	}
 
 	@Test
-	public void animais() throws Exception {
-		Animal cachorro = animal.getAnimais().get(0);
-		Animal gato = animal.getAnimais().get(1);
-		Animal cabrito = animal.getAnimais().get(2);
+	public void buscarTodosOsAnimaisDoBanco() throws Exception {
+		AnimalService animalService = new AnimalService();
+		List<Animal> animais = animalService.getAnimais();
 		
-		assertEquals(3,animal.getAnimais().size());
-		assertEquals(new Integer(1111),cachorro.getId());
-		assertEquals("cachorro",cachorro.getNome());
-		assertEquals(new Integer(2222),gato.getId());
-		assertEquals("gato",gato.getNome());
-		assertEquals(new Integer(3333),cabrito.getId());
-		assertEquals("cabrito",cabrito.getNome());
+		assertEquals(4, animais.size());
+		assertEquals(new Integer(1), animais.get(0).getId());
+		assertEquals("cachorro", animais.get(0).getNome());
+		assertEquals(new Integer(2), animais.get(1).getId());
+		assertEquals("gato", animais.get(1).getNome());
+		assertEquals(new Integer(3), animais.get(2).getId());
+		assertEquals("cabrito", animais.get(2).getNome());
+		assertEquals(new Integer(4), animais.get(3).getId());
+		assertEquals("papagaio", animais.get(3).getNome());
 	}
 }
 

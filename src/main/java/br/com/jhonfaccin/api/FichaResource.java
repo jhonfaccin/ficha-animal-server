@@ -31,9 +31,9 @@ public class FichaResource {
 	
 	@POST
     @Produces("application/json")
-    public Ficha criar(Ficha ficha) {
+    public void criar(Ficha ficha) {
 		FichaService fichaService = new FichaService();
-		return fichaService.adicionarFicha(ficha);
+		fichaService.adicionarFicha(ficha);
 	}
 	
 	@DELETE
@@ -49,7 +49,7 @@ public class FichaResource {
 	@Path("{id}")
     public Ficha update(@PathParam("id") Integer id, Ficha ficha) {
 		FichaService fichaService = new FichaService();
-		fichaService.atualizarFicha(id, ficha);
+//		fichaService.atualizarFicha(id, ficha);
 		return ficha;
 	}
 }

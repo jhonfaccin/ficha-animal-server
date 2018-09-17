@@ -1,0 +1,91 @@
+package br.com.jhonfaccin.banco;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import br.com.jhonfaccin.modelo.Animal;
+import br.com.jhonfaccin.modelo.Ficha;
+
+public class Dao {
+
+	private SessionFactory sessionFactory;
+
+	public Dao() {
+		sessionFactory = new Configuration().configure() // configures settings from hibernate.cfg.xml
+				.buildSessionFactory();
+	}
+
+	public Animal addEmp() {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Animal animal= session.get(Animal.class, new Integer(1));
+		session.getTransaction().commit();
+		session.close();
+		return animal;
+	}
+
+	public List<Animal> buscarAnimais() {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		List<Animal> animais = session.createNativeQuery("select * from animal",Animal.class).getResultList(); 
+		session.getTransaction().commit();
+		session.close();
+		return animais;
+	}
+
+	public void cadastrarFicha(Ficha ficha) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(ficha);
+		session.getTransaction().commit();
+		session.close();
+		atualizarAnimais(ficha);
+	}
+
+	private void atualizarAnimais(Ficha ficha) {
+		if (ficha.listaDeAnimais() != null) {
+			int numeroDeAnimais = ficha.listaDeAnimais().size();
+			for (int i = 0; i < numeroDeAnimais; i++) {
+				Animal animal = ficha.listaDeAnimais().get(i);
+				animal.setFichaId(ficha.getId());
+				Session session = sessionFactory.openSession();
+				session.beginTransaction();
+				session.update(animal);
+				session.getTransaction().commit();
+				session.close();
+			}
+		}
+	}
+
+	public List<Ficha> buscarFichas() {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		List<Ficha> fichas = session.createNativeQuery("select * from ficha",Ficha.class).getResultList(); 
+		session.getTransaction().commit();
+		session.close();
+		return fichas;
+	}
+
+	public Ficha buscarFichaPorId(Integer id) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Ficha ficha = session.createNativeQuery("SELECT * FROM ficha WHERE ficha.id ="+id,Ficha.class).getSingleResult();
+//		List<Animal> animais = session.createNativeQuery("SELECT * FROM animal WHERE animal.ficha_id ="+id,Animal.class).getResultList();
+//		ficha.listaDeAnimais().addAll(animais);
+		session.getTransaction().commit();
+		session.close();
+		return ficha;
+	}
+
+	public void excluirFicha(Ficha fichaParaRemover) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.delete(fichaParaRemover);
+		session.getTransaction().commit();
+		session.close();
+	}
+
+}

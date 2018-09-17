@@ -12,6 +12,9 @@ public class Emp {
 	private String name;
 	private Integer age;
 	
+	public Emp() {
+	}
+	
 	public Emp(Integer id, String name, Integer age) {
 		this.id = id;
 		this.name = name;
