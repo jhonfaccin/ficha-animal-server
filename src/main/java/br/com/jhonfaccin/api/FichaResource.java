@@ -47,10 +47,9 @@ public class FichaResource {
 	@PUT
     @Produces("application/json")
 	@Path("{id}")
-    public Ficha update(@PathParam("id") Integer id, Ficha ficha) {
+    public void update(@PathParam("id") Integer id, Ficha ficha) {
 		FichaService fichaService = new FichaService();
-//		fichaService.atualizarFicha(id, ficha);
-		return ficha;
+		fichaService.atualizarFicha(id, ficha);
 	}
 }
 

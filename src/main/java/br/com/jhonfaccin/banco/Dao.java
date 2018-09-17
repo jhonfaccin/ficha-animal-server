@@ -1,5 +1,6 @@
 package br.com.jhonfaccin.banco;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -40,6 +41,15 @@ public class Dao {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.save(ficha);
+		session.getTransaction().commit();
+		session.close();
+		atualizarAnimais(ficha);
+	}	
+	
+	public void atualizarFicha(Integer id, Ficha ficha) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(ficha);
 		session.getTransaction().commit();
 		session.close();
 		atualizarAnimais(ficha);
@@ -95,6 +105,16 @@ public class Dao {
 		session.delete(fichaParaRemover);
 		session.getTransaction().commit();
 		session.close();
+	}
+
+	public List<Ficha> buscarPorData(Date dataInicio, Date dataFim) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		List<Ficha> fichas = session.createNativeQuery("select * from ficha where dataDeCadastro between "+dataInicio.getTime()
+				+ " and "+dataFim.getTime(),Ficha.class).getResultList();
+		session.getTransaction().commit();
+		session.close();
+		return fichas;
 	}
 
 }

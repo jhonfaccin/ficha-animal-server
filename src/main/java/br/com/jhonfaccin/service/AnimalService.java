@@ -18,5 +18,4 @@ public class AnimalService {
 		this.animais.addAll(animais);
 		return this.animais;
 	}
-
 }

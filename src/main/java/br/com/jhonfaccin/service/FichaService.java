@@ -7,7 +7,6 @@ import br.com.jhonfaccin.banco.Dao;
 import br.com.jhonfaccin.modelo.Ficha;
 
 public class FichaService {
-//	private List<Ficha> fichas = new ArrayList<>();
 	
 	public FichaService() {
 	}
@@ -35,20 +34,14 @@ public class FichaService {
 		}
 	}
 
-//	public Ficha atualizarFicha(Integer id, Ficha ficha) {
-//		for (Ficha f : fichas) {
-//			if (f.getId() == ficha.getId()) {
-////				f.setAnimais(ficha.listaDeAnimais());
-//				f.setAtivo(ficha.getAtivo());
-//				f.setDataDeCadastro(ficha.getDataDeCadastro());
-//				f.setObservacao(ficha.getObservacao());
-//				return ficha;
-//			}
-//		}
-//		return null;
-//	}
-
 	public List<Ficha> buscaPorData(Date dataInicio, Date dataFim) {
-		return null;
+		Dao dao = new Dao();
+		List<Ficha> fichas = dao.buscarPorData(dataInicio,dataFim);
+		return fichas;
+	}
+
+	public void atualizarFicha(Integer id, Ficha ficha) {
+		Dao dao = new Dao();
+		dao.atualizarFicha(id,ficha);
 	}
 }

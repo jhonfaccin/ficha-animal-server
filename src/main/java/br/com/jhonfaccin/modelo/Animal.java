@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,10 +19,10 @@ public class Animal {
 	public Animal() {
 	}
 	
-	public Animal(Integer id,String nome, Ficha fichaId) {
+	public Animal(Integer id,String nome,Integer fichaId) {
 		this.id = id;
 		this.nome = nome;
-//		this.ficha = fichaId;
+		this.fichaId = fichaId;
 	}
 	
 	@Column(name = "ficha_id")
@@ -28,15 +30,15 @@ public class Animal {
 		return fichaId;
 	}
 	
-	//,
+	//@JoinColumn(name="ficha_id",nullable=false, insertable=false, updatable=false)
 //	@ManyToOne     
-//	@JoinColumn(name="ficha_id",nullable=false, insertable=false, updatable=false)
-//	public Ficha getFicha() {
-//		return ficha;
+//	@Column(name="ficha_id")
+//	public Integer getFichaId() {
+//		return fichaId;
 //	}
-
-//	public void setFicha(Ficha ficha) {
-//		this.ficha = ficha;
+//
+//	public void setFicha(Integer fichaId) {
+//		this.fichaId = fichaId;
 //	}
 	
 	@Id
