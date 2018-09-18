@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.hibernate.Session;
 
 import br.com.jhonfaccin.modelo.Animal;
@@ -47,11 +49,15 @@ public class FichaDao extends Dao {
 
 	public Ficha buscarFichaPorId(Integer id) {
 		Session session = getSession();
-		Ficha ficha = session.createNativeQuery("SELECT * FROM ficha WHERE ficha.id =" + id, Ficha.class)
-				.getSingleResult();
-		commit(session);
-		ficha = animaisCadastradosNaFicha(id, ficha);
-		return ficha;
+		try {
+			Ficha ficha = session.createNativeQuery("SELECT * FROM ficha WHERE ficha.id =" + id, Ficha.class)
+					.getSingleResult();
+			ficha = animaisCadastradosNaFicha(id, ficha);
+			return ficha;
+		} catch (NoResultException e) {
+			commit(session);
+			return null;
+		}
 	}
 
 	private Ficha animaisCadastradosNaFicha(Integer id, Ficha ficha) {
@@ -73,15 +79,15 @@ public class FichaDao extends Dao {
 		Session session = getSession();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		if (dataInicio != null && dataFim != null) {
-			Date inicio =  new Date(dataInicio);
-			Date fim =  new Date(dataFim);
+			Date inicio = new Date(dataInicio);
+			Date fim = new Date(dataFim);
 			List<Ficha> fichas = session.createNativeQuery("select * from ficha where dataDeCadastro between '"
 					+ sdf.format(inicio) + "' and '" + sdf.format(fim) + "'", Ficha.class).getResultList();
 			commit(session);
 			return fichas;
 		}
 		if (dataInicio != null && dataFim == null) {
-			Date inicio =  new Date(dataInicio);
+			Date inicio = new Date(dataInicio);
 			List<Ficha> fichas = session
 					.createNativeQuery("select * from ficha where dataDeCadastro > '" + sdf.format(inicio) + "'",
 							Ficha.class)
@@ -90,7 +96,7 @@ public class FichaDao extends Dao {
 			return fichas;
 		}
 		if (dataInicio == null && dataFim != null) {
-			Date fim =  new Date(dataFim);
+			Date fim = new Date(dataFim);
 			List<Ficha> fichas = session
 					.createNativeQuery("select * from ficha where dataDeCadastro < '" + sdf.format(fim) + "'",
 							Ficha.class)
@@ -98,6 +104,7 @@ public class FichaDao extends Dao {
 			commit(session);
 			return fichas;
 		}
+
 		commit(session);
 		return null;
 	}

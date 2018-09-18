@@ -1,7 +1,6 @@
 package br.com.jhonfaccin.api;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.GET;

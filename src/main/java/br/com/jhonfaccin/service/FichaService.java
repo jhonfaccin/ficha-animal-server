@@ -1,6 +1,5 @@
 package br.com.jhonfaccin.service;
 
-import java.util.Date;
 import java.util.List;
 
 import br.com.jhonfaccin.dao.FichaDao;

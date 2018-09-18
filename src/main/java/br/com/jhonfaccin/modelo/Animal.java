@@ -28,17 +28,6 @@ public class Animal {
 		return fichaId;
 	}
 	
-	//@JoinColumn(name="ficha_id",nullable=false, insertable=false, updatable=false)
-//	@ManyToOne     
-//	@Column(name="ficha_id")
-//	public Integer getFichaId() {
-//		return fichaId;
-//	}
-//
-//	public void setFicha(Integer fichaId) {
-//		this.fichaId = fichaId;
-//	}
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", updatable = false, nullable = false)	
