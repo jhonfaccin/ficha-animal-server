@@ -69,22 +69,32 @@ public class FichaDao extends Dao {
 		commit(session);
 	}
 
-	public List<Ficha> buscarPorData(Date dataInicio, Date dataFim) {
+	public List<Ficha> buscarPorData(Long dataInicio, Long dataFim) {
 		Session session = getSession();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		if (dataInicio != null && dataFim != null) {
+			Date inicio =  new Date(dataInicio);
+			Date fim =  new Date(dataFim);
 			List<Ficha> fichas = session.createNativeQuery("select * from ficha where dataDeCadastro between '"
-					+ sdf.format(dataInicio) + "' and '" + sdf.format(dataFim) + "'", Ficha.class).getResultList();
+					+ sdf.format(inicio) + "' and '" + sdf.format(fim) + "'", Ficha.class).getResultList();
 			commit(session);
 			return fichas;
-		} else if (dataInicio != null && dataFim == null) {
-			List<Ficha> fichas = session.createNativeQuery("select * from ficha where dataDeCadastro < '"
-					+ sdf.format(dataInicio) + "'", Ficha.class).getResultList();
+		}
+		if (dataInicio != null && dataFim == null) {
+			Date inicio =  new Date(dataInicio);
+			List<Ficha> fichas = session
+					.createNativeQuery("select * from ficha where dataDeCadastro > '" + sdf.format(inicio) + "'",
+							Ficha.class)
+					.getResultList();
 			commit(session);
 			return fichas;
-		}else if (dataInicio == null && dataFim != null) {
-			List<Ficha> fichas = session.createNativeQuery("select * from ficha where dataDeCadastro > '"
-					+ sdf.format(dataFim) + "'", Ficha.class).getResultList();
+		}
+		if (dataInicio == null && dataFim != null) {
+			Date fim =  new Date(dataFim);
+			List<Ficha> fichas = session
+					.createNativeQuery("select * from ficha where dataDeCadastro < '" + sdf.format(fim) + "'",
+							Ficha.class)
+					.getResultList();
 			commit(session);
 			return fichas;
 		}

@@ -34,7 +34,7 @@ public class FichaService {
 		}
 	}
 
-	public List<Ficha> buscaPorData(Date dataInicio, Date dataFim) {
+	public List<Ficha> buscaPorData(Long dataInicio, Long dataFim) {
 		FichaDao dao = new FichaDao();
 		List<Ficha> fichas = dao.buscarPorData(dataInicio, dataFim);
 		return fichas;

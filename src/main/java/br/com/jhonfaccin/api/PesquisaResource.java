@@ -25,7 +25,7 @@ public class PesquisaResource {
 			fichas.add(ficha);
 			return fichas;
 		}
-		return fichaService.buscaPorData(new Date(dataInicio), new Date(dataFim));
+		return fichaService.buscaPorData(dataInicio,dataFim);
     }	
 	
 }
