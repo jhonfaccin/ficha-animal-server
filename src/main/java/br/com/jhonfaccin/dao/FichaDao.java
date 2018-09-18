@@ -1,0 +1,95 @@
+package br.com.jhonfaccin.dao;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Session;
+
+import br.com.jhonfaccin.modelo.Animal;
+import br.com.jhonfaccin.modelo.Ficha;
+
+public class FichaDao extends Dao {
+
+	public void cadastrarFicha(Ficha ficha) {
+		Session session = getSession();
+		session.save(ficha);
+		commit(session);
+		atualizarAnimais(ficha);
+	}
+
+	public void atualizarFicha(Integer id, Ficha ficha) {
+		Session session = getSession();
+		session.update(ficha);
+		commit(session);
+		atualizarAnimais(ficha);
+	}
+
+	private void atualizarAnimais(Ficha ficha) {
+		if (ficha.getAnimais() != null) {
+			int numeroDeAnimais = ficha.getAnimais().size();
+			for (int i = 0; i < numeroDeAnimais; i++) {
+				Animal animal = ficha.getAnimais().get(i);
+				animal.setFichaId(ficha.getId());
+				Session session = getSession();
+				session.update(animal);
+				commit(session);
+			}
+		}
+	}
+
+	public List<Ficha> buscarFichas() {
+		Session session = getSession();
+		List<Ficha> fichas = session.createNativeQuery("select * from ficha", Ficha.class).getResultList();
+		commit(session);
+		return fichas;
+	}
+
+	public Ficha buscarFichaPorId(Integer id) {
+		Session session = getSession();
+		Ficha ficha = session.createNativeQuery("SELECT * FROM ficha WHERE ficha.id =" + id, Ficha.class)
+				.getSingleResult();
+		commit(session);
+		ficha = animaisCadastradosNaFicha(id, ficha);
+		return ficha;
+	}
+
+	private Ficha animaisCadastradosNaFicha(Integer id, Ficha ficha) {
+		Session session = getSession();
+		List<Animal> animais = session
+				.createNativeQuery("SELECT * FROM animal WHERE animal.ficha_id =" + id, Animal.class).getResultList();
+		commit(session);
+		ficha.setAnimais(animais);
+		return ficha;
+	}
+
+	public void excluirFicha(Ficha fichaParaRemover) {
+		Session session = getSession();
+		session.delete(fichaParaRemover);
+		commit(session);
+	}
+
+	public List<Ficha> buscarPorData(Date dataInicio, Date dataFim) {
+		Session session = getSession();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		if (dataInicio != null && dataFim != null) {
+			List<Ficha> fichas = session.createNativeQuery("select * from ficha where dataDeCadastro between '"
+					+ sdf.format(dataInicio) + "' and '" + sdf.format(dataFim) + "'", Ficha.class).getResultList();
+			commit(session);
+			return fichas;
+		} else if (dataInicio != null && dataFim == null) {
+			List<Ficha> fichas = session.createNativeQuery("select * from ficha where dataDeCadastro < '"
+					+ sdf.format(dataInicio) + "'", Ficha.class).getResultList();
+			commit(session);
+			return fichas;
+		}else if (dataInicio == null && dataFim != null) {
+			List<Ficha> fichas = session.createNativeQuery("select * from ficha where dataDeCadastro > '"
+					+ sdf.format(dataFim) + "'", Ficha.class).getResultList();
+			commit(session);
+			return fichas;
+		}
+		commit(session);
+		return null;
+	}
+
+}

@@ -26,8 +26,6 @@
 
     <!-- Drop and re-create the database schema on startup -->
     <property name="hbm2ddl.auto">update</property>
-    <mapping package="br.com.jhonfaccin.banco"/>
-    <mapping class="br.com.jhonfaccin.banco.Emp"/>
     <mapping class="br.com.jhonfaccin.modelo.Animal"/>
     <mapping class="br.com.jhonfaccin.modelo.Ficha"/>
   </session-factory>

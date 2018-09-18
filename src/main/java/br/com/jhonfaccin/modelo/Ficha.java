@@ -14,8 +14,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.ColumnTransformer;
-
 @Entity
 @Table(name = "ficha")
 public class Ficha {
